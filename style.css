@@ -1,0 +1,38 @@
+header {
+    display: flex;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    margin-top:  15px;
+}
+
+#btn-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px auto;
+}
+
+#btn {
+    font-size: large;
+    padding: 8px;
+}
+
+#btn:hover {
+    color: blue;
+}
+
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+    height: 600px;
+    margin: 20px auto;
+    border: solid;
+}
+
+.gridDiv {
+    width: calc(600px / 16);
+    height: calc(600px / 16);
+    box-sizing: border-box;
+}
