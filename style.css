@@ -1,10 +1,16 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(15, 0, 58);
+}
+
 header {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 40px;
     font-weight: bold;
     margin-top:  15px;
+    color: white;
 }
 
 #btn-container {
@@ -16,10 +22,81 @@ header {
 #btn {
     font-size: large;
     padding: 8px;
+    border-radius: 8px;
 }
 
 #btn:hover {
     color: blue;
+}
+
+#main {
+    display: flex;
+    justify-self: center;
+    background-color: #3700b3;
+    border-radius: 15px;
+    padding: 10px 40px 10px 40px;
+    height: auto;
+    width: 950px auto;
+}
+
+#buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 300px;
+}
+
+#mono {
+    height: 30px;
+    width: 200px;
+    border: solid black;
+    border-radius: 8px;
+}
+
+#mono:hover {
+    background-color: black;
+    color: white;
+    border: solid white;
+}
+
+#rainbow {
+    margin-top: 20px;
+    height: 30px;
+    width: 200px;
+    border: solid black;
+    border-radius: 8px;
+}
+
+#eraser {
+    margin-top: 20px;
+    height: 30px;
+    width: 200px;
+    border: solid black;
+    border-radius: 8px;
+}
+
+#eraseAll {
+    margin-top: 20px;
+    height: 30px;
+    width: 200px;
+    border: solid black;margin-top: 20px;
+    border-radius: 8px;
+}
+
+#separator {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height: 425px;
+}
+
+#gridView {
+    height: 30px;
+    width: 100px;
+    border: solid black;
+    margin-top: 20px;
+    border-radius: 8px;
 }
 
 #container {
@@ -28,11 +105,12 @@ header {
     width: 600px;
     height: 600px;
     margin: 20px auto;
-    border: solid;
+    border: solid 2px rgb(255, 102, 102);
+    background-color: white;
 }
 
 .gridDiv {
     width: calc(600px / 16);
-    height: calc(600px / 16);
+    height: calc(600 / 16);
     box-sizing: border-box;
 }
