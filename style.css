@@ -68,6 +68,22 @@ header {
     border-radius: 8px;
 }
 
+#opacityOff {
+    margin-top: 20px;
+    height: 30px;
+    width: 200px;
+    border: solid black;
+    border-radius: 8px;
+}
+
+#opacityOn {
+    margin-top: 20px;
+    height: 30px;
+    width: 200px;
+    border: solid black;
+    border-radius: 8px;
+}
+
 #eraser {
     margin-top: 20px;
     height: 30px;
@@ -113,4 +129,5 @@ header {
     width: calc(600px / 16);
     height: calc(600 / 16);
     box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
 }
