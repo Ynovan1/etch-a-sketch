@@ -82,30 +82,40 @@ function rainbowColorFunction(event) {
 
 function increaseOpacityFunction(event) {
     let element = event.target;
-    let originalColor = element.dataset.originalColor;
-    let currentOpacity = parseFloat(element.dataset.opacity || 0);
 
-    if (!originalColor) {
-        element.dataset.originalColor = "rgb(255, 255, 255)";
-        element.dataset.opacity = 0.1;
-        element.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
-        return;
+    let currentOpacity = parseFloat(element.dataset.opacity);
+    let currentColor = window.getComputedStyle(element).backgroundColor;
+    let rgbMatch = currentColor.match(/\d+/g);
+
+    if (!element.dataset.originalColor && rgbMatch) {
+        element.dataset.originalColor = `rgb(${rgbMatch[0]}, ${rgbMatch[1]}, ${rgbMatch[2]})`;
+    }
+
+    if (isNaN(currentOpacity)) {
+        const rgbaMatch = currentColor.match(/rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/);
+        currentOpacity = rgbaMatch ? parseFloat(rgbaMatch[4]) : (rgbMatch ? 1 : 0);
+        element.dataset.opacity = currentOpacity ? currentOpacity.toFixed(1) : '0';
     }
 
     if (currentOpacity < 1) {
         currentOpacity = Math.min(1, currentOpacity + 0.1);
-        element.dataset.opacity = currentOpacity;
+        element.dataset.opacity = currentOpacity.toFixed(1);
 
-        const rgbMatch = originalColor.match(/\d+/g);
-        if (rgbMatch) {
-            element.style.backgroundColor = `rgba(${rgbMatch[0]}, ${rgbMatch[1]}, ${rgbMatch[2]}, ${currentOpacity})`;
+        if (element.dataset.originalColor) {
+            const originalRgb = element.dataset.originalColor.match(/\d+/g);
+            if (originalRgb) {
+                element.style.backgroundColor = `rgba(${originalRgb[0]}, ${originalRgb[1]}, ${originalRgb[2]}, ${currentOpacity.toFixed(1)})`;
+            }
+        } else if (rgbMatch) {
+            element.style.backgroundColor = `rgba(${rgbMatch[0]}, ${rgbMatch[1]}, ${rgbMatch[2]}, ${currentOpacity.toFixed(1)})`;
         }
     } else {
-        const rgbMatch = originalColor.match(/\d+/g);
-        if (rgbMatch) {
+        if (element.dataset.originalColor) {
+            element.style.backgroundColor = element.dataset.originalColor;
+        } else if (rgbMatch) {
             element.style.backgroundColor = `rgb(${rgbMatch[0]}, ${rgbMatch[1]}, ${rgbMatch[2]})`;
-            element.dataset.opacity = 1;
         }
+        element.dataset.opacity = '1';
     }
 }
 
@@ -113,15 +123,18 @@ function increaseOpacityFunction(event) {
 function decreaseOpacityFunction(event) {
     let element = event.target;
     let currentColor = window.getComputedStyle(element).backgroundColor;
-    let rgba = currentColor.match(/\d+(\.\d+)?/g);
+    let rgbaMatch = currentColor.match(/rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/);
+    let rgbMatch = currentColor.match(/rgb\((\d+), (\d+), (\d+)\)/);
+    let currentOpacity;
 
-    if (rgba) {
-        let opacity = parseFloat(rgba[3] || 1);
-        opacity = Math.max(0, opacity - 0.1);
-        element.style.backgroundColor = `rgba(${rgba[0]}, ${rgba[1]}, ${rgba[2]}, ${opacity})`;
-    } else if (currentColor.startsWith("rgb")) {
-        let rgb = currentColor.match(/\d+/g).map(Number);
-        element.style.backgroundColor = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.9)`;
+    if (rgbaMatch) {
+        currentOpacity = parseFloat(rgbaMatch[4]);
+        let newOpacity = Math.max(0, currentOpacity - 0.1);
+        element.style.backgroundColor = `rgba(${rgbaMatch[1]}, ${rgbaMatch[2]}, ${rgbaMatch[3]}, ${newOpacity.toFixed(1)})`;
+        element.dataset.opacity = newOpacity.toFixed(1);
+    } else if (rgbMatch) {
+        element.style.backgroundColor = `rgba(${rgbMatch[1]}, ${rgbMatch[2]}, ${rgbMatch[3]}, 0.9)`;
+        element.dataset.opacity = '0.9';
     }
 }
 
